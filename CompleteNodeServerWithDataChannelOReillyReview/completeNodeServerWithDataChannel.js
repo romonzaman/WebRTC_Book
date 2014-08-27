@@ -3,7 +3,7 @@ var http = require('http');
 // Create a node-static server instance
 var file = new(static.Server)();
 
-// We use the http moduleÕs createServer function and
+// We use the http moduleÃ•s createServer function and
 // rely on our instance of node-static to serve the files
 var app = http.createServer(function (req, res) {
   file.serve(req, res);
@@ -24,8 +24,13 @@ io.sockets.on('connection', function (socket){
         
         // Handle 'create or join' messages
         socket.on('create or join', function (room) {
-                var numClients = io.sockets.clients(room).length;
-
+                //var numClients = io.sockets.clients(room).length;
+                var numClients = 0;
+                var clients = io.sockets.adapter.rooms[room];
+                for (var clientId in clients) {
+                    numClients = numClients+1;
+                }                
+ 
                 log('S --> Room ' + room + ' has ' + numClients + ' client(s)');
                 log('S --> Request to create or join room', room);
 
